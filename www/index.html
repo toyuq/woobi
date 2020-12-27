@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>INDEX.HTML</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Welcome to toyuq's HomePage</h2>
+  <div class="well">
+	<p>test 123</p>
+	<p>반갑습니다.</p>
+	<p>반갑습니다. test</p>
+  </div>
+  <div style="margin-bottom:10px">
+	  <button id="btn_tor" type="button" class="btn btn-default">Go to OVER TOR</button>
+	  <button id="btn_test" type="button" class="btn btn-info">test.html</button>
+	  <button id="btn_kakao" type="button" class="btn btn-info">kakao</button>
+	  <button id="btn_snsTest" type="button" class="btn btn-info">snsTest</button>
+	  <button id="btn_tableMerge" type="button" class="btn btn-info">tableMerge</button>
+	  <button id="btn_xmlTest" type="button" class="btn btn-info">XmlTest</button> 
+	  <button id="btn_firstEagle" type="button" class="btn btn-info">키오스크</button> 
+  </div>
+  <img src="/img/polar-bear.png" width="100%">
+</div>
+
+</body>
+<script>
+$(document).ready(function(){
+
+    $("#btn_tor").click(function(){
+        location.href="/pro/main.html";
+    });
+
+    $("#btn_test").click(function(){
+        location.href="/test.html";
+    });
+	
+	$("#btn_kakao").click(function(){
+        fn_kakao();
+    });
+	
+	
+	$("#btn_snsTest").click(function(){
+        location.href="../dev/snsTest.html";
+    });
+	
+	$("#btn_tableMerge").click(function(){
+        location.href="../dev/tableMerge.html";
+    });
+	
+	$("#btn_xmlTest").click(function(){
+        location.href="../dev/xmlTest.html";
+    });
+	
+	$("#btn_firstEagle").click(function(){
+        location.href="firstEagle/index.html";
+    });
+	
+});
+
+Kakao.init('06986c5dfcc93afe8e43fab0b1a452ed');   // 사용할 앱의 JavaScript 키를 설정해 주세요.
+
+function fn_kakao(){
+
+	Kakao.Link.sendTalkLink({
+		label: '타이틀 영역입니다.', // 공유할 메세지의 제목을 설정
+		image: {
+			src: 'http://toyuq.woobi.co.kr/img/polar-bear.png',
+			width: '100',
+			height: '100'
+		}, // 이건 썸네일을 설정 하는 겁니다.
+				
+		webButton: {
+			text: '텍스트 영역입니다.',
+			url : 'http://toyuq.woobi.co.kr/' // 각각의 포스팅 본문의 링크를 거는 코드입니다. 
+	  }
+  });
+
+}
+
+
+
+</script>
+</html>
+
+
+

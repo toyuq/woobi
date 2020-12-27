@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Torbjorn TURRET</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <style type="text/css">
+
+  	img{
+  		margin-bottom: 3px;
+  		margin-right: 1px;
+  		margin-left: 1px;
+  		/*cursor: pointer;*/
+  	}
+  </style>
+</head>
+
+<body>
+	<div id="header"></div>
+	<script> 
+		$(function(){
+			$("#header").load("../pro/header.html"); 
+		});
+	</script> 
+
+	<div class="container">
+		<h1 id="mapNm"></h1>
+		<h3>Build a turret at this point.</h3>     
+
+		<div id="madeImg">
+
+		</div>
+	</div>
+
+
+
+	<div id="footer"></div>
+	<script> 
+		$(function(){
+			$("#footer").load("../pro/footer.html"); 
+		});
+	</script> 
+
+
+
+
+<script type="text/javascript">
+
+	/* check parameter */
+	$.urlParam = function(name){
+	    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	    if (results==null){
+	       return null;
+	    }
+	    else{
+	       return results[1] || 0;
+	    }
+	}
+
+
+
+	$(document).ready(function(){ 
+
+		fn_makeImg();
+
+
+		$("[id^=img_]").click(function() {
+	
+		});
+
+	});
+
+
+
+
+/*
+01	Dorado
+02	Eichenwalde
+	Hanamura
+	Temple of Anubis
+	Volskaya Industries
+	Route 66
+	Watchpoint: Gibraltar
+	Hollywood
+	King's Row
+	Numbani
+	Ilios
+	Lijiang Tower
+	Nepal
+	Oasis
+	Ecopoint: Antarctica
+*/
+
+	function fn_makeImg(){
+
+		var vMap ;
+		var vPos ;
+		var makeImg = "";
+
+		switch($.urlParam("map")){
+
+			case "img_01":
+				vMap = "Dorado";
+				vPos = ['http://i.imgur.com/uTTa9pZ.jpg'
+					,'http://i.imgur.com/Efmt2sd.jpg'
+					,'http://i.imgur.com/uTTa9pZ.jpg'
+					,'http://i.imgur.com/Efmt2sd.jpg'];
+
+			break;
+
+			case "img_02":
+				vMap = "Eichenwalde";
+				vPos = ["http://i.imgur.com/uTTa9pZ.jpg"
+					,"http://i.imgur.com/Efmt2sd.jpg"
+					,"http://i.imgur.com/uTTa9pZ.jpg"
+					,"http://i.imgur.com/Efmt2sd.jpg"];
+
+			break;
+
+			default : location.href = "../pro/main.html";
+		}
+
+
+		$("#mapNm").text(vMap);
+
+
+
+		
+		for( x in vPos ){
+
+			makeImg += "<img src=" + vPos[x] +" class='img-rounded' width='49%' height='49%'>";
+		}
+
+
+		//$("#madeImg").html();
+		$("#madeImg").append(makeImg);
+
+	}
+
+</script>
+
+
+</html>

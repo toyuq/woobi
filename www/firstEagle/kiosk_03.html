@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>3장. 음식을 주문해봅시다.</title>
+
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="src/bootstrap.min.css">
+  <script src="src/jquery.min.js"></script>
+  <script src="src/popper.min.js"></script>
+  <script src="src/bootstrap.min.js"></script>
+
+  
+  <style type="text/css">
+
+  	img{
+  		width: 100%; cursor: pointer;
+  	}
+
+    body {
+      position: relative;
+    }
+      ul.nav-pills {
+      top: 20px;
+      position: fixed;
+    }
+    p{
+      font-size : 2em
+    }
+  </style>
+</head>
+
+
+<body>
+
+  
+    <div class="alert alert-info">
+      <a href="index.html">
+        <strong><i class="material-icons">school</i> 3장. 음식을 주문해봅시다.</strong>
+      </a>
+    </div>
+      
+  <div class="container-fluid">
+
+    <div class="row">
+
+      <div class="col-7 alert alert-primary">
+        <table id="foodTable" class="table table-bordered table-light" >
+            <tbody>
+              <tr >
+                <td >
+                  <div class="card" >
+                    <img src="images/food/food_01.png" class="rounded" id="img_01" data-price="5500" data-menu="빅맥_버거" onclick="fn_foodClick(this)">
+                    <div class="card-body">
+                      <h4 class="card-title">빅맥 버거</h4>
+                      <p class="card-text">5,500원</p>
+                    </div>
+                  </div>
+                </td>
+                <td >
+                  <div class="card" >
+                    <img src="images/food/food_02.png" class="rounded" id="img_02" data-price="5000" data-menu="상하이_버거" onclick="fn_foodClick(this)">
+                    <div class="card-body">
+                      <h4 class="card-title">상하이 버거</h4>
+                      <p class="card-text">5,000원</p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <!---->
+              <tr>
+                <td >
+                  <div class="card" >
+                    <img src="images/food/food_03.png" class="rounded" id="img_03" data-price="3500" data-menu="치즈_버거" onclick="fn_foodClick(this)">
+                    <div class="card-body">
+                      <h4 class="card-title">치즈 버거</h4>
+                      <p class="card-text">3,500원</p>
+                    </div>
+                  </div>
+                </td>
+                <td > 
+                  <div class="card" >
+                    <img src="images/food/food_04.png" class="rounded" id="img_04" data-price="3000" data-menu="스낵랩" onclick="fn_foodClick(this)">
+                    <div class="card-body">
+                      <h4 class="card-title">스낵랩</h4>
+                      <p class="card-text">3,000원</p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <!---->
+              <tr>
+                <td >
+                  <div class="card" >
+                    <img src="images/food/food_05.png" class="rounded" id="img_05" data-price="1500" data-menu="콜라" onclick="fn_foodClick(this)">
+                    <div class="card-body">
+                      <h4 class="card-title">치즈 버거</h4>
+                      <p class="card-text">1,500원</p>
+                    </div>
+                  </div>
+                </td>
+                <td > 
+                  <div class="card" >
+                    <img src="images/food/food_06.png" class="rounded" id="img_06" data-price="2000" data-menu="감자_튀김" onclick="fn_foodClick(this)">
+                    <div class="card-body">
+                      <h4 class="card-title">감자 튀김</h4>
+                      <p class="card-text">2,000원</p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+
+
+      <div class="col-5 " >
+        <ul class="nav nav-pills flex-column alert alert-success" style="margin-top: 50px;">
+          <div class="" style="text-align: center">
+
+            <table class="table table-striped">
+              <colgroup>
+                <col style="width: 100px;">
+                <col >
+              </colgroup>
+              <thead>
+                <tr>
+                  <th><p>메뉴</p></th>
+                  <th><p>가격</p></th>
+                </tr>
+                <tr>
+                  <th>
+                    합계 :
+                  </th>
+                  <th style="vertical-align:middle">
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="가격을 입력해주세요" id="inputTotal"  >
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-success" onclick="fn_chkTotal()">확인</button>
+                      </div>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="menuNav">
+              </tbody>
+            </table>
+          </div>
+        </ul>
+      </div>
+
+  </div>
+</div>
+
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">음식값을 계산해봅니다.</h4>
+          <button type="button" class="close" data-dismiss="modal">[X]</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body" id="modalContent">
+         
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">[닫기]</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+<script>
+
+$(document).ready(function(){
+
+  $("#foodTable").find("td").css("border-width", "10px"); // 표 두께
+  $("#foodTable").find("td").css("border-color", "royalblue"); //표 내부 선
+
+  $("th").css("vertical-align", "middle"); //중앙정렬
+  $("td").css("vertical-align", "middle");
+
+});
+
+
+//이미지 클릭 이벤트
+function fn_foodClick(obj){ // obj
+
+  var id = obj.id;
+  var $obj = $("#"+id);
+  var imgSrc = $obj.attr("src");
+  var width = $obj.css("width");
+  var menu = $obj.data("menu");
+  var price = $obj.data("price")
+  menu = menu.split('_').join(' ');  // 메뉴이름에 언더바(_)가 들어가 있으면 제거
+
+
+
+
+  if($obj.parent().hasClass("bg-danger")){
+
+    $obj.parent().removeClass("bg-danger"); //선택한 이미지 배경 제거
+    $("#tr_"+id).remove();
+
+  }else{
+
+    $obj.parent().addClass("bg-danger"); //선택한 이미지 배경 붉은색으로 넣기
+
+    var innerHtml = "";
+    innerHtml += "<tr id='tr_"+ id +"'>";
+    innerHtml += "<td>" + menu + "</td>";
+    innerHtml += "<td>" + cm(price)+"원" + "</td>";
+    innerHtml += "</tr>";
+
+    $("#menuNav").append(innerHtml);
+  }
+
+
+
+}
+
+
+
+
+function fn_chkTotal(){
+
+  //합계 계산 스크립트 
+  var totalCnt = 0; //햄버거 합산
+  var inputTotal = $("#inputTotal").val(); //입력된 값
+
+
+  $(".bg-danger").find("img").each(function(index, item){
+
+    totalCnt += $(this).data("price");
+  });
+
+
+  
+  if(!totalCnt || totalCnt == 0){
+
+    $("#modalContent").text("음식을 선택해주세요.");
+    $("#myModal").modal(); 
+
+  }else if(!inputTotal || inputTotal == 0){
+
+    $("#modalContent").text("합계를 입력해주세요.");
+    $("#myModal").modal(); 
+
+  }else if(totalCnt == inputTotal){
+
+    $("#modalContent").text("정답입니다!");
+    $("#myModal").modal(); 
+
+  }else{
+
+    $("#modalContent").text("정답이 아닙니다.");
+    $("#myModal").modal(); 
+  }
+
+  
+
+}
+
+//천단위 콤마
+function cm(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+</script>
+</body>
+</html>
+
+
+

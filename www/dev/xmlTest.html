@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>등록금 통계 정보</title>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
+
+
+<body>
+
+<div class="container">
+
+  <h2 ><i class="material-icons">school</i>등록금 통계 정보</h2>
+  
+  <div class="well">
+	<!--<p>xml 파싱 연습</p>-->
+	<p>한국장학재단 <br/>2016년 등록금 통계정보(2017.04.26)</p>
+	<p>출처 :<a href="https://www.data.go.kr/dataset/3071171/fileData.do"> 공공데이터포털</a></p>
+  </div>
+
+  <div class="form-group">
+    <!-- <button id="btn_xmlTest" type="button" class="btn btn-info">XmlTest</button> -->
+	<p >학교명을 입력해주세요.</p>
+	<input type="text" id="schlList" class="form-control">
+  </div>
+  
+  <table class="table">
+   <tbody>
+      <tr>
+        <td>학교명</td>
+        <td id="schl_nm"></td>
+      </tr>      
+      <tr class="success">
+        <td>대학/전문대학</td>
+        <td id="univ_div1"></td>
+      </tr>
+	  <tr class="warning">
+        <td>국립/사립</td>
+        <td id="univ_div2"></td>
+      </tr>
+	  <tr class="active">
+        <td>평균등록금(1년)</td>
+        <td id="svc_data"></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+</body>
+
+<script>
+
+var xmlJson = [];
+var schlList = [];
+var xmlComplete = false;
+
+$(document).ready(function(){
+
+
+	fn_xmlLoad();
+	
+});
+
+
+
+function fn_xmlLoad(){
+
+	$.ajax({
+		type: "GET"
+		,dataType: "xml"
+		,url: "xml/drg.xml"
+		,success: function(xml){
+
+			var xmlData = $(xml).find("Field");
+
+			for(var i = 0; xmlData.length > i; i++){
+			
+				xmlJson.push({ "i" : i, "schl_nm" : $(xmlData[i]).attr("schl_nm")
+										, "univ_div1" : $(xmlData[i]).attr("univ_div1")
+										, "univ_div2" : $(xmlData[i]).attr("univ_div2")
+										, "svc_data" : $(xmlData[i]).attr("svc_data")
+										, value : $(xmlData[i]).attr("schl_nm") /* autocomplete list name */
+							});
+				schlList.push($(xmlData[i]).attr("schl_nm"));
+			}
+
+			xmlComplete = true;
+			
+			$( "#schlList" ).autocomplete({
+			  minLength: 0
+			  ,source : xmlJson
+			  ,focus: function( event, ui ) {
+				$( "#schlList" ).val( ui.item.schl_nm );
+				return false;
+			  },
+			  select: function( event, ui ) {
+
+			    var item = ui.item;
+				
+				$( "#schlList" ).val( item.schl_nm );
+				
+				$( "#schl_nm" ).html( item.schl_nm );
+				$( "#univ_div1" ).html( item.univ_div1 );
+				$( "#univ_div2" ).html( item.univ_div2 );
+				$( "#svc_data" ).html( cm(Number(item.svc_data).toFixed(0)) + ',000원' );
+
+				/*$("#svc_data").html( item.schl_nm + " (" + item.univ_div1 + ", " + item.univ_div2+ ")" 
+									+ "의 1년 치 평균 등록금은 " + cm(Number(item.svc_data).toFixed(0)) + ",000원입니다.");*/
+				return false;
+			  } 
+			 });
+			 
+		}// success
+	}); 
+}
+
+
+function cm(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
+
+</script>
+</html>
+
+
+

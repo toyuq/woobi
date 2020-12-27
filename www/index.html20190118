@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>INDEX.HTML</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Welcome to toyuq's HomePage</h2>
+  <div class="well">test 123</div>
+  <button type="button" class="btn btn-default">Button</button>
+  <button id="btn_test" type="button" class="btn btn-info">test.html</button>
+     
+</div>
+
+</body>
+<script>
+$(document).ready(function(){
+    $("#btn_test").click(function(){
+        location.href="test.html";
+    });
+});
+</script>
+</html>

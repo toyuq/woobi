@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>음식을 주문해봅시다.</title>
+
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="src/bootstrap.min.css">
+  <script src="src/jquery.min.js"></script>
+  <script src="src/popper.min.js"></script>
+  <script src="src/bootstrap.min.js"></script>
+
+  
+  <style type="text/css">
+
+  	img{
+  		width: 100%; cursor: pointer;
+  	}
+  </style>
+</head>
+
+
+<body>
+
+      <div class="container">
+          <a href="index.html">
+              <strong><i class="material-icons">school</i> 음식을 주문해봅시다.</strong>
+            </a>
+          <div class="alert alert-success">
+            <a href="kiosk_01.html">
+              <strong>1 장</strong> 
+            </a>
+          </div>
+          <div class="alert alert-info">
+            <a href="kiosk_02.html">
+              <strong>2 장</strong> 
+            </a>
+          </div>
+          <div class="alert alert-warning">
+            <a href="kiosk_03.html">
+              <strong>3 장</strong> 
+            </a>
+          </div>
+          <div class="alert alert-danger">
+            <a href="kiosk_04.html">
+              <strong>4 장</strong> 
+            </a>
+          </div>
+          <div class="alert alert-primary">
+            <a href="kiosk_05.html">
+              <strong>5 장</strong> 
+            </a>
+          </div>
+        </div>
+
+</body>
+
+<script>
+
+$(document).ready(function(){
+
+  $("td").css("border-width", "10px"); // 표 두께
+  $("td").css("border-color", "royalblue"); //표 내부 선
+});
+
+
+//이미지 클릭 이벤트
+function fn_foodClick(obj){ // obj
+
+  var id = obj.id;
+  var imgSrc = $("#"+id).attr("src");
+  var width = $("#"+id).css("width");
+  var menu = obj.dataset.menu;
+  menu = menu.split('_').join('<br/>');  // 메뉴이름에 언더바(_)가 들어가 있으면 줄바꿈
+
+
+  $("#selectFood").css("width", width);  //이미지 사이즈변경
+  $("#selectFood").attr("src", imgSrc); //이미지 변경
+  
+  $("#menuText").html(menu); //메뉴명 변경
+  $("#priceText").text(cm(obj.dataset.price)); //가격변경
+
+  
+}
+
+//천단위 콤마
+function cm(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+</script>
+</html>
+
+
+

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>1장. 음식을 주문해봅시다.</title>
+
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="src/bootstrap.min.css">
+  <script src="src/jquery.min.js"></script>
+  <script src="src/popper.min.js"></script>
+  <script src="src/bootstrap.min.js"></script>
+
+  
+  <style type="text/css">
+
+  	img{
+  		width: 100%; cursor: pointer;
+  	}
+
+    body {
+      position: relative;
+    }
+      ul.nav-pills {
+      top: 20px;
+      position: fixed;
+    }
+    p{
+      font-size : 2em
+    }
+    td{
+      border-width: 10px; border-color:royalblue;
+    }
+  </style>
+</head>
+
+
+<body>
+
+  
+    <div class="alert alert-info">
+      <a href="index.html">
+        <strong><i class="material-icons">school</i> 1장. 음식을 주문해봅시다.</strong>
+      </a>
+    </div>
+      
+  <div class="container-fluid">
+
+    <div class="row">
+
+      <div class="col-8 alert alert-primary">
+        <table class="table table-bordered table-light" >
+            <tbody>
+              <tr >
+                <td >
+                  <img src="images/food/food_01.png" class="rounded" id="img_01" data-price="5500" data-menu="빅맥_버거" onclick="fn_foodClick(this)" />
+                </td>
+                <td >
+                  <img src="images/food/food_02.png" class="rounded" id="img_02" data-price="5000" data-menu="상하이_버거" onclick="fn_foodClick(this)"/>
+                </td>
+              </tr>
+              <tr>
+                <td >
+                  <img src="images/food/food_03.png" class="rounded" id="img_03" data-price="3500" data-menu="치즈_버거"onclick="fn_foodClick(this)"/>
+                </td>
+                <td > 
+                  <img src="images/food/food_04.png" class="rounded" id="img_04" data-price="3000" data-menu="스낵랩" onclick="fn_foodClick(this)"/>
+                </td>
+              </tr>
+              <tr>
+                <td >
+                  <img src="images/food/food_05.png" class="rounded" id="img_05" data-price="1500" data-menu="콜라" onclick="fn_foodClick(this)"/>
+                </td>
+                <td >
+                  <img src="images/food/food_06.png" class="rounded" id="img_06" data-price="2000" data-menu="감자_튀김" onclick="fn_foodClick(this)"/>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+
+
+      <div class="col-4">
+        <ul class="nav nav-pills flex-column alert alert-success" style="margin-top: 50px;">
+          <div class="" style="text-align: center">
+            <img src="images/selectFood.png" id="selectFood"  />
+            <p id="menuText"></p>
+            <p id="priceText"></p>
+          </div>
+        </ul>
+      </div>
+
+  </div>
+</div>
+
+</body>
+
+<script>
+
+$(document).ready(function(){
+
+  $("td").css("border-width", "10px"); // 표 두께
+  $("td").css("border-color", "royalblue"); //표 내부 선
+
+  $('[data-toggle="popover"]').popover();   
+});
+
+
+//이미지 클릭 이벤트
+function fn_foodClick(obj){ // obj
+
+  var id = obj.id;
+  var imgSrc = $("#"+id).attr("src");
+  var width = $("#"+id).css("width");
+  var menu = obj.dataset.menu;
+  menu = menu.split('_').join('<br/>');  // 메뉴이름에 언더바(_)가 들어가 있으면 줄바꿈
+
+
+  $("#selectFood").css("width", width);  //이미지 사이즈변경
+  $("#selectFood").attr("src", imgSrc); //이미지 변경
+  
+  $("#menuText").html(menu); //메뉴명 변경
+  $("#priceText").text(cm(obj.dataset.price)+"원"); //가격변경
+
+  
+}
+
+//천단위 콤마
+function cm(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+</script>
+</html>
+
+
+

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>INDEX.HTML</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+  <h2>Welcome to toyuq's HomePage</h2>
+  
+  <div class="well">
+	<p>test 123</p>
+	<p>반갑습니다.</p>
+	<p>sns기능 테스트</p>
+  </div>
+  
+  <p>공유할 sns 이미지를 클릭해주세요.</p>
+  
+  <div style="margin-bottom:10px; margin-top:10px;">
+	  <input type="image" src="./images/Facebook.png" onClick="fnSendSns('facebook')">facebook</input>
+	  <input type="image" src="./images/Twitter.png" onClick="fnSendSns('twitter')">twitter</input>
+  </div>
+  <div style="margin-bottom:10px; margin-top:10px;">
+	  <input type="image" src="./images/Kakao.png" onClick="fnSendSns('kakaotalk')" >kakaotalk</input> 
+	  <input type="image" src="./images/Kakao_Story.png" onClick="fnSendSns('kakaostory')" >kakaostory</input> 
+  </div>
+  <div class="well">
+	<a href="../files/snsTest.zip" download>샘플 다운로드</a><br>
+	<a href="http://dev.epiloum.net/916">참조 사이트 : http://dev.epiloum.net/916</a>
+  </div>
+  
+</div>
+
+</body>
+<script>
+$(document).ready(function(){
+
+	
+});
+
+/*
+ 카카오톡 개발자 앱의 JavaScript 키를 설정해 주세요.
+ 그리고 사용할 도메인도 등록해야합니다.
+ 등록되지 않은 도메인에서 카카오링크를 사용할 수가 없습니다.
+ */
+Kakao.init('06986c5dfcc93afe8e43fab0b1a452ed');   
+
+function fnSendSns(sns){
+
+	var url = "http://toyuq.woobi.co.kr/dev/snsTest.html";
+	var txt = "공유할 메시지입니다.";
+	
+	fnShareSns(sns,url,txt);
+}
+
+
+function fnShareSns(sns, url, txt){
+	
+	//console.log("sendSns : " + sns);
+	var o;
+	var _url = encodeURIComponent(url);
+	var _txt = encodeURIComponent(txt);
+	var _br  = encodeURIComponent('\r\n');
+ 
+	switch(sns)
+	{
+		case 'facebook':
+			o = {
+				method:'popup',
+				url:'http://www.facebook.com/sharer/sharer.php?u=' + _url
+			};
+			break;
+ 
+		case 'twitter':
+			o = {
+				method:'popup',
+				url:'http://twitter.com/intent/tweet?text=' + _txt + '&url=' + _url
+			};
+			break;
+ 
+		case 'me2day':
+			o = {
+				method:'popup',
+				url:'http://me2day.net/posts/new?new_post[body]=' + _txt + _br + _url + '&new_post[tags]=epiloum'
+			};
+			break;
+ 
+		case 'kakaotalk':
+			o = {
+				method:'kakaotalk',
+				url : url,
+				txt : txt
+			};
+			break;
+ 
+		case 'kakaostory':
+			o = {
+				method:'web2app',
+				param:'posting?post=' + _txt + _br + _url + '&apiver=1.0&appver=2.0&appid=dev.epiloum.net&appname=' + encodeURIComponent('Epiloum 개발노트'),
+				a_store:'itms-apps://itunes.apple.com/app/id486244601?mt=8',
+				g_store:'market://details?id=com.kakao.story',
+				a_proto:'storylink://',
+				g_proto:'scheme=kakaolink;package=com.kakao.story'
+			};
+			break;
+ 
+		case 'band':
+			o = {
+				method:'web2app',
+				param:'create/post?text=' + _txt + _br + _url,
+				a_store:'itms-apps://itunes.apple.com/app/id542613198?mt=8',
+				g_store:'market://details?id=com.nhn.android.band',
+				a_proto:'bandapp://',
+				g_proto:'scheme=bandapp;package=com.nhn.android.band'
+			};
+			break;
+ 
+		default:
+			alert('지원하지 않는 SNS입니다.');
+			return false;
+	}
+ 
+	switch(o.method)
+	{
+		case 'popup':
+			window.open(o.url, '_blank', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+			break;
+ 
+		case 'web2app':
+			if(navigator.userAgent.match(/android/i))
+			{
+				// Android
+				setTimeout(function(){ location.href = 'intent://' + o.param + '#Intent;' + o.g_proto + ';end'}, 100);
+			}
+			else if(navigator.userAgent.match(/(iphone)|(ipod)|(ipad)/i))
+			{
+				// Apple
+				setTimeout(function(){ location.href = o.a_store; }, 200);          
+				setTimeout(function(){ location.href = o.a_proto + o.param }, 100);
+			}
+			else
+			{
+				alert('이 기능은 모바일에서만 사용할 수 있습니다.');
+			}
+			break;
+			
+		case 'kakaotalk':
+			if(navigator.userAgent.match(/android/i) || navigator.userAgent.match(/(iphone)|(ipod)|(ipad)/i)){
+				
+				Kakao.Link.sendTalkLink({
+					label: o.txt, // 공유할 메세지의 제목을 설정
+					image: {
+						src: 'http://toyuq.woobi.co.kr/dev/images/bg_written_oath.gif', //공유할 메시지의 이미지 설정
+						width: '100', // 이미지 가로 사이즈
+						height: '100' // 이미지 세로 사이즈
+					  },// 이건 썸네일을 설정 하는 겁니다.
+					webButton: {
+						text: '바로가기', //하단 메시지
+						 url : o.url // 각각의 포스팅 본문의 링크를 거는 코드입니다. 
+					}
+				  });
+				
+			}else{
+				alert('이 기능은 모바일에서만 사용할 수 있습니다.');
+			}
+			break;
+	}
+}
+
+</script>
+</html>
+
+
+
